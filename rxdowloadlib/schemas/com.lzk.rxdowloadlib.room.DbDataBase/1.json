@@ -1,0 +1,64 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "84ba0cda94a086f3dbd3bcebc6d1d651",
+    "entities": [
+      {
+        "tableName": "DownLoadDb",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`downLoadUrl` TEXT NOT NULL, `savePath` TEXT NOT NULL, `fileName` TEXT NOT NULL, `readLength` INTEGER NOT NULL, `totalLength` INTEGER NOT NULL, `state` INTEGER NOT NULL, PRIMARY KEY(`downLoadUrl`))",
+        "fields": [
+          {
+            "fieldPath": "downLoadUrl",
+            "columnName": "downLoadUrl",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "savePath",
+            "columnName": "savePath",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fileName",
+            "columnName": "fileName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "readLength",
+            "columnName": "readLength",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalLength",
+            "columnName": "totalLength",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "downLoadUrl"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '84ba0cda94a086f3dbd3bcebc6d1d651')"
+    ]
+  }
+}
