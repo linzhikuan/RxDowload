@@ -10,9 +10,12 @@ kotlin语法
 <h3>
 基本使用：
 </h3>
-<h5>
+<body>
+<h4>
 如果是kotlin直接使用iDownLoad?.操作  如果是java DownLoadManager.Companion.getInstance().getIDowload().操作
-开始下载：iDownLoad?.startDownLoad(
+</h4>
+<div>
+iDownLoad?.startDownLoad(
                     DowloadBuild
                         .Build()
                         .setDowloadBean(
@@ -21,22 +24,40 @@ kotlin语法
                             )
                         ).create()
                 )
-暂停下载：iDownLoad?.stopDowload("http://dldir1.qq.com/weixin/android/weixin6330android920.apk")
+</div>
 
-获取进度：iDownLoad?.queryProgress(object : IDownLoadListner.Stub() {
+<p>
+iDownLoad?.stopDowload("http://dldir1.qq.com/weixin/android/weixin6330android920.apk")
+</p>
+
+<p>
+iDownLoad?.queryProgress(object : IDownLoadListner.Stub() {
+
                 override fun update(
-                    readLenth: Long,//当前下载文件的长度
-                    totalLenth: Long,//当前下载文件的总长度
-                    dowloadUrl: String?,//正在下载的地址
-                    isbegin: Boolean//是否已经开始下载
+                    readLenth: Long,
+                    totalLenth: Long,
+                    dowloadUrl: String?,
+                    isbegin: Boolean
                 ) {
                         val progressValue = ((readLenth * 1.0 / totalLenth * 100).toInt())
                 }
-
+                
                 override fun error(error: String?) {
                 }
             })
-</h5>
+</p>
+</body>
+
+
+
+
+
+
+
+
+
+
+
 <h3>
 aidl接口：
 </h3>
