@@ -8,6 +8,7 @@ import android.util.Log
 import com.lzk.rxdowloadlib.IDownLoadListner
 import com.lzk.rxdowloadlib.bean.DownloadBean
 import com.lzk.rxdowloadlib.bean.DowloadBuild
+import com.lzk.rxdowloadlib.manager.DownLoadManager
 import com.lzk.rxdowloadlib.manager.iDownLoad
 import kotlinx.android.synthetic.main.activity_main.*
 
