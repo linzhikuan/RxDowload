@@ -1,22 +1,15 @@
 
-
-
 描述：
-
-
-rxdowload是一个下载器,使用简单，用到aidl ipc通信模式，rxjava okhttp retrofit 目前流行的网络请求和异步操作。
+rxdowload是一个下载器,使用简单，支持断点续传，用到aidl ipc通信模式，rxjava okhttp retrofit 目前流行的网络请求和异步操作。
 kotlin语法
 
 基本使用：
-implementation 'com.lzk.rxdownload:rxdowloadlib:1.4.0'
+implementation 'com.lzk.rxdownload:rxdowloadlib:1.4.0'//添加到gradle
 application{
-DownLoadManager.getInstance().init(this)
+DownLoadManager.getInstance().init(this)//初始化在你的aplication
 }
+服务注册:RxDowloadService这个service注册到你的manifest
 
-服务注册:
-           <service
-            android:name="com.lzk.rxdowloadlib.service.RxDowloadService"
-            android:process=":remote" />
 
           //开始下载
                 DownLoadManager.getInstance().startDownLoad(
