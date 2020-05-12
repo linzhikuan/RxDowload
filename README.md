@@ -24,11 +24,11 @@ DownLoadManager.getInstance().init(this)
             </body>
 <body>
 <body>
-dowload_btn.setOnClickListener {
-            if (isStart) {
+          //停止下载
                 DownLoadManager.getInstance()
                     .stopDownLoad("http://dldir1.qq.com/weixin/android/weixin6330android920.apk")
-            } else {
+
+           //开始下载
                 DownLoadManager.getInstance().startDownLoad(
                     DowloadBuild
                         .Build()
@@ -38,11 +38,6 @@ dowload_btn.setOnClickListener {
                             )
                         ).create()
                 )
-            }
-            isStart = !isStart
-
-        }
-
 </body>
 
 
