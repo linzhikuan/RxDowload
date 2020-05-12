@@ -13,14 +13,12 @@ application{
 DownLoadManager.getInstance().init(this)
 }
 
-<p>服务注册</p>
-
-<service
+服务注册:
+           <service
             android:name="com.lzk.rxdowloadlib.service.RxDowloadService"
             android:process=":remote" />
 
-
- //开始下载
+          //开始下载
                 DownLoadManager.getInstance().startDownLoad(
                     DowloadBuild
                         .Build()
@@ -36,8 +34,8 @@ DownLoadManager.getInstance().init(this)
                     .stopDownLoad("http://dldir1.qq.com/weixin/android/weixin6330android920.apk")
 
 
-
-        DownLoadManager.getInstance().addCalBack(object : DownLoadManager.DownLoadCallBack {
+          //进度监听
+                DownLoadManager.getInstance().addCalBack(object : DownLoadManager.DownLoadCallBack {
                         override fun update(it: DownLoadDb?) {
                             it?.let { db ->
                                 myLog("path__" + db.absolutePath)
