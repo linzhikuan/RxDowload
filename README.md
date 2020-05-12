@@ -10,14 +10,20 @@ kotlin语法
 <h3>
 基本使用：
 implementation 'com.lzk.rxdownload:rxdowloadlib:1.4.0'
+
+
 application{
 DownLoadManager.getInstance().init(this)
 }
-//<service
-              android:name="com.lzk.rxdowloadlib.service.RxDowloadService"
-              android:process=":remote" />
 </h3>
-          //开始下载
+<p>服务注册</p>
+<body>
+<service
+            android:name="com.lzk.rxdowloadlib.service.RxDowloadService"
+            android:process=":remote" />
+
+<body>
+ //开始下载
                 DownLoadManager.getInstance().startDownLoad(
                     DowloadBuild
                         .Build()
@@ -27,13 +33,14 @@ DownLoadManager.getInstance().init(this)
                             )
                         ).create()
                 )
-
+                </body>
+<body>
           //停止下载
                 DownLoadManager.getInstance()
                     .stopDownLoad("http://dldir1.qq.com/weixin/android/weixin6330android920.apk")
+</body>
 
-
-        //监听
+<body>
         DownLoadManager.getInstance().addCalBack(object : DownLoadManager.DownLoadCallBack {
                         override fun update(it: DownLoadDb?) {
                             it?.let { db ->
@@ -70,7 +77,7 @@ DownLoadManager.getInstance().init(this)
 
 
 
-
+            </body>
 
 
 
