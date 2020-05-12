@@ -16,14 +16,14 @@ application{
 DownLoadManager.getInstance().init(this)
 }
 </h3>
-<body>
 <p>服务注册</p>
- <service
+<body>
+<service
             android:name="com.lzk.rxdowloadlib.service.RxDowloadService"
             android:process=":remote" />
-
-
-
+            </body>
+<body>
+<body>
 dowload_btn.setOnClickListener {
             if (isStart) {
                 DownLoadManager.getInstance()
@@ -43,7 +43,7 @@ dowload_btn.setOnClickListener {
 
         }
 
-
+</body>
 
 
         DownLoadManager.getInstance().addCalBack(object : DownLoadManager.DownLoadCallBack {
