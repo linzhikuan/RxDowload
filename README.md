@@ -1,28 +1,25 @@
 
 
-<h3>
+
 描述：
-</h3>
-<h5>
+
+
 rxdowload是一个下载器,使用简单，用到aidl ipc通信模式，rxjava okhttp retrofit 目前流行的网络请求和异步操作。
 kotlin语法
-</h5>
-<h3>
+
 基本使用：
 implementation 'com.lzk.rxdownload:rxdowloadlib:1.4.0'
-
-
 application{
 DownLoadManager.getInstance().init(this)
 }
-</h3>
+
 <p>服务注册</p>
-<body>
+
 <service
             android:name="com.lzk.rxdowloadlib.service.RxDowloadService"
             android:process=":remote" />
 
-<body>
+
  //开始下载
                 DownLoadManager.getInstance().startDownLoad(
                     DowloadBuild
@@ -33,14 +30,13 @@ DownLoadManager.getInstance().init(this)
                             )
                         ).create()
                 )
-                </body>
-<body>
+
           //停止下载
                 DownLoadManager.getInstance()
                     .stopDownLoad("http://dldir1.qq.com/weixin/android/weixin6330android920.apk")
-</body>
 
-<body>
+
+
         DownLoadManager.getInstance().addCalBack(object : DownLoadManager.DownLoadCallBack {
                         override fun update(it: DownLoadDb?) {
                             it?.let { db ->
@@ -77,7 +73,7 @@ DownLoadManager.getInstance().init(this)
 
 
 
-            </body>
+
 
 
 
