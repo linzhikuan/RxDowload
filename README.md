@@ -17,10 +17,10 @@ DownLoadManager.getInstance().init(this)
 }
 </h3>
 <body>
-<p>服务注册
+<p>服务注册</p>
  <service
             android:name="com.lzk.rxdowloadlib.service.RxDowloadService"
-            android:process=":remote" /></p>
+            android:process=":remote" />
 
 
 
@@ -79,6 +79,9 @@ dowload_btn.setOnClickListener {
                             dowload_btn.text = "继续"
                         }
                     })
+
+
+
             </body>
 
 
