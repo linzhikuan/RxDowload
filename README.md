@@ -10,16 +10,15 @@ kotlin语法
 <h3>
 基本使用：
 implementation 'com.lzk.rxdownload:rxdowloadlib:1.4.0'
-
-
 application{
 DownLoadManager.getInstance().init(this)
 }
-</h3>
-          //服务注册
+//服务注册
             <service
             android:name="com.lzk.rxdowloadlib.service.RxDowloadService"
             android:process=":remote" />
+</h3>
+
 
 
           //开始下载
