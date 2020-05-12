@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "84ba0cda94a086f3dbd3bcebc6d1d651",
+    "identityHash": "7131b0fd9c6c43aa309b1aaef1b028e7",
     "entities": [
       {
         "tableName": "DownLoadDb",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`downLoadUrl` TEXT NOT NULL, `savePath` TEXT NOT NULL, `fileName` TEXT NOT NULL, `readLength` INTEGER NOT NULL, `totalLength` INTEGER NOT NULL, `state` INTEGER NOT NULL, PRIMARY KEY(`downLoadUrl`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`downLoadUrl` TEXT NOT NULL, `savePath` TEXT NOT NULL, `absolutePath` TEXT NOT NULL, `fileName` TEXT NOT NULL, `readLength` INTEGER NOT NULL, `totalLength` INTEGER NOT NULL, `state` INTEGER NOT NULL, PRIMARY KEY(`downLoadUrl`))",
         "fields": [
           {
             "fieldPath": "downLoadUrl",
@@ -17,6 +17,12 @@
           {
             "fieldPath": "savePath",
             "columnName": "savePath",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "absolutePath",
+            "columnName": "absolutePath",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -58,7 +64,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '84ba0cda94a086f3dbd3bcebc6d1d651')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7131b0fd9c6c43aa309b1aaef1b028e7')"
     ]
   }
 }

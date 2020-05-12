@@ -5,49 +5,57 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.lzk.rxdowloadlib.IDownLoadListner
 import com.lzk.rxdowloadlib.bean.DownloadBean
 import com.lzk.rxdowloadlib.bean.DowloadBuild
+import com.lzk.rxdowloadlib.bean.DownLoadDb
 import com.lzk.rxdowloadlib.manager.DownLoadManager
-import com.lzk.rxdowloadlib.manager.iDownLoad
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private val tag: String = "RxDowloadService>>>"
     private var isStart = false
     val mHandler = Handler(Looper.getMainLooper())
+
     override fun onDestroy() {
         super.onDestroy()
         mHandler.removeCallbacksAndMessages(null)
+        DownLoadManager.getInstance().removeCallBack()
+    }
+
+
+    private fun myLog(msg: String) {
+        Log.d(tag, msg)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mHandler.postDelayed({
-            iDownLoad?.queryProgress(object : IDownLoadListner.Stub() {
-                override fun update(
-                    readLenth: Long,
-                    totalLenth: Long,
-                    dowloadUrl: String?,
-                    isbegin: Boolean
-                ) {
-                    mHandler.post {
-                        val progressValue = ((readLenth * 1.0 / totalLenth * 100).toInt())
-                        progress.secondaryProgress = progressValue
-                        text.text = progressValue.toString() + "__" + readLenth + "__" + totalLenth
-                        if (progressValue == 100) {
-                            dowload_btn.text = "安装"
-                        } else {
-                            if (isbegin) {
-                                isStart = true
-                                dowload_btn.text = "暂停"
+            DownLoadManager.getInstance().addCalBack(object : DownLoadManager.DownLoadCallBack {
+                override fun update(it: DownLoadDb?) {
+                    it?.let { db ->
+                        myLog("path__" + db.absolutePath)
+                        mHandler.post {
+                            val progressValue =
+                                ((db.readLength * 1.0 / db.totalLength * 100).toInt())
+                            progress.secondaryProgress = progressValue
+                            text.text =
+                                progressValue.toString() + "__" + db.readLength + "__" + db.totalLength
+
+                            myLog(text.text.toString())
+                            if (progressValue == 100) {
+                                dowload_btn.text = "安装"
                             } else {
-                                isStart = false
-                                dowload_btn.text = "继续"
+                                if (db.state == 1) {
+                                    isStart = true
+                                    dowload_btn.text = "暂停"
+                                } else {
+                                    isStart = false
+                                    dowload_btn.text = "继续"
+                                }
                             }
                         }
                     }
-
                 }
 
                 override fun error(error: String?) {
@@ -56,13 +64,14 @@ class MainActivity : AppCompatActivity() {
                     dowload_btn.text = "继续"
                 }
             })
-        }, 1000)
+        }, 2000)
 
         dowload_btn.setOnClickListener {
             if (isStart) {
-                iDownLoad?.stopDowload("http://dldir1.qq.com/weixin/android/weixin6330android920.apk")
+                DownLoadManager.getInstance()
+                    .stopDownLoad("http://dldir1.qq.com/weixin/android/weixin6330android920.apk")
             } else {
-                iDownLoad?.startDownLoad(
+                DownLoadManager.getInstance().startDownLoad(
                     DowloadBuild
                         .Build()
                         .setDowloadBean(
@@ -77,4 +86,5 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 }

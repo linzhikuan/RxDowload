@@ -1,18 +1,15 @@
 package com.lzk.rxdowloadlib.impl
 
 import android.content.Context
-import android.os.Parcel
 import android.util.Log
 import com.lzk.rxdowloadlib.IDownLoad
 import com.lzk.rxdowloadlib.IDownLoadListner
 import com.lzk.rxdowloadlib.bean.DowloadBuild
-import com.lzk.rxdowloadlib.bean.DownloadBean
 import com.lzk.rxdowloadlib.net.RetriofitApi
 import com.lzk.rxdowloadlib.net.createDowload
 import com.lzk.rxdowloadlib.net.switchThread
 import com.lzk.rxdowloadlib.room.DbDataBase
-import com.lzk.rxdowloadlib.room.DownLoadDb
-import io.reactivex.Completable
+import com.lzk.rxdowloadlib.bean.DownLoadDb
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
 import java.io.BufferedOutputStream
@@ -112,6 +109,7 @@ class DownLoadImpl(var context: Context) : IDownLoad.Stub() {
                         mdb.fileName
                     )
             }
+            mdb.absolutePath = file.path
             mdb.downLoadFile = file
         }
 
@@ -121,7 +119,7 @@ class DownLoadImpl(var context: Context) : IDownLoad.Stub() {
         return Flowable.just(mdb).map { db ->
             val local = downLoadDao?.getDownLoadDb(db.downLoadUrl)
             myLog("local__" + local?.totalLength + "__" + db.readLength)
-            if (db.readLength == local?.totalLength ?: 0) {
+            if (db.readLength == local?.totalLength ?: 1) {
                 throw Exception("已经下载完成")
             }
             db
@@ -151,7 +149,7 @@ class DownLoadImpl(var context: Context) : IDownLoad.Stub() {
                             out.write(buff, 0, len)
                             db.state = 1
                             downLoadDao?.insertOrUpdate(db)
-                            observarbleDb()
+                            myLog("saving__" + db.absolutePath)
                         } catch (e: Exception) {
                             db.disposable?.dispose()
                             iDownLoadListner?.error("下载失败")
@@ -161,7 +159,6 @@ class DownLoadImpl(var context: Context) : IDownLoad.Stub() {
                     out.close()
                     db.state = 0
                     downLoadDao?.insertOrUpdate(db)
-                    observarbleDb()
                     true
                 }
         }.compose(switchThread()).subscribe({
@@ -172,43 +169,30 @@ class DownLoadImpl(var context: Context) : IDownLoad.Stub() {
         })
     }
 
+    @Synchronized
     private fun observarbleDb() {
-        if (observableDbDispose == null || observableDbDispose!!.isDisposed) {
-            observableDbDispose =
-                downLoadDao
-                    ?.getAllDownLoadDbFlowable()
-                    ?.compose(switchThread())
-                    ?.subscribe({ list ->
-                        list?.forEach { db ->
-                            if (db.downLoadFile == null || !db.downLoadFile!!.exists()) {
-                                var file: File
-                                if (db.savePath.isEmpty()) {
-                                    file = File(context.externalCacheDir, db.fileName)
-                                } else {
-                                    file =
-                                        File(
-                                            db.savePath,
-                                            db.fileName
-                                        )
-                                }
-                                db.downLoadFile = file
-                            }
-
-                            if (db.downLoadFile!!.exists()) {
-                                db.readLength = db.downLoadFile!!.length()
-                                iDownLoadListner?.update(
-                                    db.readLength,
-                                    db.totalLength,
-                                    db.downLoadUrl,
-                                    db.state == 1
-                                )
-                            }
-                        }
-                    }, {
-                        iDownLoadListner?.error("获取信息失败")
-                        myLog(it.message ?: "")
-                    })
+        if (iDownLoadListner == null) {
+            observableDbDispose?.dispose()
+            return
         }
+        observableDbDispose?.dispose()
+        observableDbDispose =
+            downLoadDao
+                ?.getAllDownLoadDbFlowable()
+                ?.compose(switchThread())
+                ?.subscribe({ list ->
+                    list?.forEach { db ->
+                        val file = File(db.absolutePath)
+                        db.readLength = file.length()
+                        myLog("observarbleDb__" + db.absolutePath + "__" + file.length())
+                        iDownLoadListner?.update(
+                            db
+                        )
+                    }
+                }, {
+                    iDownLoadListner?.error("获取信息失败")
+                    myLog(it.message ?: "")
+                })
     }
 
 }

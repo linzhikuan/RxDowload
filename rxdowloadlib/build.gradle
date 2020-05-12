@@ -13,8 +13,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -49,9 +47,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     //network
     implementation 'com.squareup.okhttp3:okhttp:3.14.1'
@@ -77,7 +72,7 @@ def siteUrl = 'https://github.com/linzhikuan/RxDowload' // 项目主页。
 def gitUrl = 'https://github.com/linzhikuan/RxDowload.git' // Git仓库的url。
 
 group = "com.lzk.rxdownload"// 唯一包名,比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的com.ansen.http就是这里配置的。
-version = "1.0.0"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
+version = "1.4.0"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
 
 install {
     repositories.mavenInstaller {

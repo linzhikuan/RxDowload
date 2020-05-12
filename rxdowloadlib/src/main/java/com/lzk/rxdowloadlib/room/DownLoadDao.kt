@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.lzk.rxdowloadlib.bean.DownLoadDb
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
