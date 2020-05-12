@@ -13,12 +13,10 @@ implementation 'com.lzk.rxdownload:rxdowloadlib:1.4.0'
 application{
 DownLoadManager.getInstance().init(this)
 }
+//<service
+              android:name="com.lzk.rxdowloadlib.service.RxDowloadService"
+              android:process=":remote" />
 </h3>
-<p>
-<service
-            android:name="com.lzk.rxdowloadlib.service.RxDowloadService"
-            android:process=":remote" />
-</p>
           //开始下载
                 DownLoadManager.getInstance().startDownLoad(
                     DowloadBuild
